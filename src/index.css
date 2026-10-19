@@ -1,0 +1,272 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter Variable', system-ui, sans-serif;
+    background: #d6d6d3;
+    transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-x: hidden;
+  }
+  :focus-visible {
+    outline: 2px solid var(--fg, #111);
+    outline-offset: 3px;
+    border-radius: 9999px;
+  }
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Registered colour tokens interpolate, so every element reading them eases between environments. */
+@property --fg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --muted {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --border {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --card {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --card-active {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --btn-bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --btn-fg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --watermark {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --panel {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --panel-solid {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --thumb {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+.theme-transition {
+  transition:
+    --fg 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --muted 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --border 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --card 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --card-active 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --btn-bg 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --btn-fg 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --watermark 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --panel 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --panel-solid 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    --thumb 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-title {
+  font-stretch: 70%;
+  font-size: clamp(3.6rem, 17vw, 6.5rem);
+}
+@media (min-width: 640px) {
+  .hero-title {
+    font-size: clamp(5rem, 13vw, 7.5rem);
+  }
+}
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: clamp(5.25rem, 8.6vw, 10rem);
+  }
+}
+
+.watermark {
+  font-stretch: 64%;
+  font-size: clamp(7.5rem, 38vw, 12rem);
+  letter-spacing: -0.02em;
+}
+@media (min-width: 1024px) {
+  .watermark {
+    font-size: clamp(14rem, 25vw, 28rem);
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ambient float: a few pixels of lift with a long, smooth cycle. The contact shadow tightens as the shoe rises. */
+@keyframes shoe-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(-0.6deg);
+  }
+}
+@keyframes shoe-shadow {
+  0%,
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleX(0.86);
+    opacity: 0.7;
+  }
+}
+.shoe-float {
+  animation: shoe-float 6.5s cubic-bezier(0.45, 0, 0.55, 1) infinite both;
+}
+.shoe-shadow {
+  animation: shoe-shadow 6.5s cubic-bezier(0.45, 0, 0.55, 1) infinite both;
+}
+html[data-hidden] .shoe-float,
+html[data-hidden] .shoe-shadow {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shoe-float,
+  .shoe-shadow {
+    animation: none;
+  }
+  .theme-transition,
+  body {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Fixed palettes for surfaces that don't follow the hero colourway (pages, drawers, footer). */
+.theme-light {
+  --fg: #111111;
+  --muted: #5f5f5b;
+  --border: rgba(17, 17, 17, 0.12);
+  --card: rgba(255, 255, 255, 0.6);
+  --card-active: rgba(17, 17, 17, 0.06);
+  --btn-bg: #111111;
+  --btn-fg: #ffffff;
+  --panel: rgba(246, 246, 244, 0.86);
+  --panel-solid: #f6f6f4;
+  --watermark: rgba(17, 17, 17, 0.05);
+  --thumb: rgba(17, 17, 17, 0.04);
+}
+.theme-dark {
+  --fg: #f5f5f4;
+  --muted: #a3a3a0;
+  --border: rgba(255, 255, 255, 0.12);
+  --card: rgba(255, 255, 255, 0.05);
+  --card-active: rgba(255, 255, 255, 0.1);
+  --btn-bg: #f5f5f4;
+  --btn-fg: #111111;
+  --panel: rgba(22, 22, 23, 0.9);
+  --panel-solid: #161617;
+  --watermark: rgba(255, 255, 255, 0.05);
+  --thumb: rgba(255, 255, 255, 0.05);
+}
+
+/* Slow ambient blooms behind the closing call to action. */
+@keyframes ambient-a {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-46%, -54%) scale(1.08); opacity: 0.8; }
+}
+@keyframes ambient-b {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-56%, -46%) scale(1.12); }
+}
+.ambient-a { animation: ambient-a 14s ease-in-out infinite; }
+.ambient-b { animation: ambient-b 18s ease-in-out infinite; }
+
+@keyframes scroll-cue {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(3px); }
+}
+.scroll-cue { animation: scroll-cue 1.8s ease-in-out infinite; }
+
+html[data-hidden] .ambient-a,
+html[data-hidden] .ambient-b { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-a,
+  .ambient-b,
+  .scroll-cue { animation: none; }
+  html { scroll-behavior: auto !important; }
+}
+
+/* Kids page: lively float with a little rotation. */
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(var(--r, -8deg)); }
+  50% { transform: translateY(-14px) rotate(calc(var(--r, -8deg) + 4deg)); }
+}
+.bob { animation: bob 4.2s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .bob { animation: none; transform: rotate(var(--r, -8deg)); }
+}
+
+/* Footer credit: a soft heartbeat. */
+@keyframes beat {
+  0%, 60%, 100% { transform: scale(1); }
+  20% { transform: scale(1.22); }
+  40% { transform: scale(0.94); }
+}
+.beat { animation: beat 1.6s ease-in-out infinite; transform-origin: center; }
+@media (prefers-reduced-motion: reduce) {
+  .beat { animation: none; }
+}
+
+/* Sale ticker: two identical halves scroll by exactly half their width for a seamless loop. */
+@keyframes ticker {
+  to { transform: translateX(-50%); }
+}
+.ticker { animation: ticker 32s linear infinite; }
+.ticker:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .ticker { animation: none; }
+}
+
+/* Kids hero: air bubbles rising behind the headline. */
+@keyframes rise-bubble {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  50% { transform: translate3d(18px, -55vh, 0); }
+  100% { transform: translate3d(-12px, -115vh, 0); opacity: 0.9; }
+}
+.kid-bubble { animation: rise-bubble 14s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .kid-bubble { animation: none; display: none; }
+}
